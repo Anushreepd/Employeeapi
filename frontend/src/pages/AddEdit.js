@@ -53,10 +53,6 @@ const AddEdit = () => {
 
 
     const handleSubmit = (e) => {
-        const selected = new Date(value).getFullYear();
-        const now = new Date().getFullYear();
-        const age_now = now - selected;
-        if(age_now > 18){
         e.preventDefault();
 
         if (!id) {
@@ -67,10 +63,8 @@ const AddEdit = () => {
         }
         setTimeout(200);
     }
-    else{
-        toast.error("Less than 18 years");
-    }
-    }
+    
+    
 
     const validateDate = (value) => {
         const selected = new Date(value).getFullYear();
@@ -87,7 +81,7 @@ const AddEdit = () => {
         <div style={{ marginTop: "100px" }}>
             <form style={{ padding: "15px", maxwidth: "400px", alignContent: "center" }} onSubmit={handleSubmit}>
 
-
+               <h2>Employee Details</h2>
                 <label htmlFor="fname"> First Name</label> <br></br>
                 <input type="text" id="fname" name="fname" onChange={handleInputChange} placeholder="Enter First Name..." required="required" defaultValue={fname} pattern="[A-Za-z]*" min={6} max={25} /><br></br>
 
@@ -101,7 +95,7 @@ const AddEdit = () => {
                 <input type="number" id="contact" name="contact" onChange={handleInputChange} required="required" placeholder="Enter Phone number..." defaultValue={contact} pattern="[0-9]*" /> <br></br>
 
                 <label htmlfor="dob">Employee Date of Birth </label><br></br>
-                <input id="dob" type="date" class="form-control date-input" name="dob" onChange={handleInputChange} validate ={validateDate} placeholder="Enter Date Of Birth..." required="required" defaultValue={dob} />
+                <input id="dob" type="date" class="form-control date-input" name="dob" onChange={handleInputChange} valid ={validateDate} placeholder="Enter Date Of Birth..." required="required" defaultValue={dob} />
                 <span class="btn btn-default">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
