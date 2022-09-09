@@ -37,6 +37,10 @@ const AddEdit = () => {
         setState({ ...state, [e.target.name]: e.target.value });
     }
 
+    // const handleInputChangeDob=(e)=>{
+    //     setState({ ...state, [e.target.dob]: e.target.value });
+    // }
+
     const addUser = async (data) => {
         const response = await axios.post("http://localhost:5000/user", data);
         if (response.status === 200) {
@@ -55,27 +59,41 @@ const AddEdit = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (!id) {
-            addUser(state);
+        const selected = new Date(state.dob).getFullYear();
+        const now = new Date().getFullYear();
+        const age_now = now - selected;
+        console.log(state.dob)
+        if(age_now > 18)
+        {
+            if(!id)
+            {
+                addUser(state);  
+            }
+            else {
+                updateUser(state, id)
+            }
+            setTimeout(200);
         }
-        else {
-            updateUser(state, id)
+        else
+        {
+        toast.error("Less than 18 years");
         }
-        setTimeout(200);
+
     }
     
     
 
-    const validateDate = (value) => {
+    /* const validateDate = (value) => {
         const selected = new Date(value).getFullYear();
         const now = new Date().getFullYear();
         const age_now = now - selected;
+        console.log(value)
         if(age_now < 18)
         {
         toast.error("Less than 18 years");
         }
       };
-
+      */
 
     return (
         <div style={{ marginTop: "100px" }}>
@@ -95,7 +113,7 @@ const AddEdit = () => {
                 <input type="number" id="contact" name="contact" onChange={handleInputChange} required="required" placeholder="Enter Phone number..." defaultValue={contact} pattern="[0-9]*" /> <br></br>
 
                 <label htmlfor="dob">Employee Date of Birth </label><br></br>
-                <input id="dob" type="date" class="form-control date-input" name="dob" onChange={handleInputChange} valid ={validateDate} placeholder="Enter Date Of Birth..." required="required" defaultValue={dob} />
+                <input id="dob" type="date" class="form-control date-input" name="dob" onChange={handleInputChange} /*valid ={validateDate(dob)}*/ placeholder="Enter Date Of Birth..." required="required" defaultValue={dob} />
                 <span class="btn btn-default">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
